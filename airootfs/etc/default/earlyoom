@@ -1,0 +1,1 @@
+EARLYOOM_OPTS="--avoid-noise --prefer oom_score_adj -m 10 -s 10"

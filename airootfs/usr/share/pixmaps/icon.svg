@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- 圆形渐变背景定义 -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#1E2A5E"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- 最外围不太明显的圆形描边 -->
+  <circle cx="256" cy="256" r="250" stroke="#2D3B6E" stroke-width="4" fill="none" opacity="0.6"/>
+  
+  <!-- 圆形渐变背景 -->
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradient)"/>
+  
+  <!-- 外轮廓：偏高带弧度的三角形，边框宽度24 -->
+  <path d="M256 80 L 396 380 L 116 380 Z" fill="none" stroke="#5D9BFF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- 从左边中点出发，连接右下顶点，线与三角形边框等宽（24px） -->
+  <line x1="186" y1="230" x2="396" y2="380" stroke="#5D9BFF" stroke-width="24" stroke-linecap="round"/>
+  
+  <!-- 内部的四个碎片 - 使用更明亮的青蓝色系，与主三角形区分开 -->
+  <!-- 碎片1: 青绿色调，倾斜 -15度，位于左上方 -->
+  <g transform="translate(180, 180) rotate(-15)">
+    <polygon points="0,0 45,15 15,55" fill="#2DD4BF" opacity="0.95"/>
+  </g>
+  
+  <!-- 碎片2: 亮湖蓝色，倾斜 25度，位于中部偏右下方 -->
+  <g transform="translate(320, 290) rotate(25)">
+    <polygon points="0,0 50,0 25,45" fill="#06B6D4" opacity="0.9"/>
+  </g>
+  
+  <!-- 碎片3: 天蓝色，倾斜 55度，位于底部偏左（微调后位置） -->
+  <g transform="translate(180, 320) rotate(55)">
+    <polygon points="0,0 35,20 10,55" fill="#0EA5E9" opacity="0.9"/>
+  </g>
+  
+  <!-- 第四个更小的碎片: 冰蓝色，位于右侧中部 -->
+  <g transform="translate(360, 210) rotate(-8)">
+    <polygon points="0,0 28,12 12,38" fill="#7DD3FC" opacity="0.9"/>
+  </g>
+  
+  <!-- 微弱光晕增加精致感 -->
+  <path d="M256 80 L 396 380 L 116 380 Z" fill="none" stroke="#3B82F6" stroke-width="2" stroke-dasharray="8 6" opacity="0.3"/>
+</svg>
