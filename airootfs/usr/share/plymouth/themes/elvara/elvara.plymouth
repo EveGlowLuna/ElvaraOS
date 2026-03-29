@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Elvara
+Description=ElvaraOS Boot Splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/elvara
+ScriptFile=/usr/share/plymouth/themes/elvara/elvara.script

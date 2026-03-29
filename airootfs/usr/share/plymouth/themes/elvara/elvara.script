@@ -1,0 +1,52 @@
+// ElvaraOS Plymouth Theme
+
+screen_width = Window.GetWidth();
+screen_height = Window.GetHeight();
+
+// 纯黑背景
+Window.SetBackgroundTopColor(0.0, 0.0, 0.0);
+Window.SetBackgroundBottomColor(0.0, 0.0, 0.0);
+
+// 加载 Logo
+logo_image = Image("elvara-logo-text.png");
+logo_sprite = Sprite(logo_image);
+
+logo_w = logo_image.GetWidth();
+logo_h = logo_image.GetHeight();
+
+logo_sprite.SetX(screen_width / 2 - logo_w / 2);
+logo_sprite.SetY(screen_height / 2 - logo_h / 2 - 30);
+
+// 进度条（纯色，用 SpriteImage 画矩形）
+bar_width = 320;
+bar_height = 4;
+bar_x = screen_width / 2 - bar_width / 2;
+bar_y = logo_sprite.GetY() + logo_h + 40;
+
+// 背景轨道
+track_image = Image(bar_width, bar_height);
+track_image.Scale(bar_width, bar_height);
+track_sprite = Sprite(track_image);
+track_sprite.SetX(bar_x);
+track_sprite.SetY(bar_y);
+track_sprite.SetOpacity(0.3);
+
+// 进度填充
+progress_image = Image(bar_width, bar_height);
+progress_sprite = Sprite(progress_image);
+progress_sprite.SetX(bar_x);
+progress_sprite.SetY(bar_y);
+
+fun progress_callback(duration, progress) {
+    w = Math.Int(bar_width * progress);
+    if (w < 2) w = 2;
+    new_img = Image(w, bar_height);
+    for (y = 0; y < bar_height; y++) {
+        for (x = 0; x < w; x++) {
+            new_img.SetPixel(x, y, 0.4, 0.7, 1.0, 1.0);
+        }
+    }
+    progress_sprite.SetImage(new_img);
+}
+
+Plymouth.SetBootProgressFunction(progress_callback);
