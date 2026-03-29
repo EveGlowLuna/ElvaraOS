@@ -53,17 +53,20 @@ jobs:
 
           ISO_FILE=$(ls output/*.iso | head -1)
           ISO_NAME=$(basename "$ISO_FILE")
+          ISO_SHA256=$(sha256sum "$ISO_FILE" | awk '{print $1}')
+
           echo "iso_name=$ISO_NAME" >> $GITHUB_OUTPUT
           echo "iso_url=${CUSTOM_DOMAIN}/${ISO_NAME}" >> $GITHUB_OUTPUT
+          echo "iso_sha256=$ISO_SHA256" >> $GITHUB_OUTPUT
 
-          # 上传前清理：超过 1 个就删最旧的
+          # 上传前清理：删除所有旧 ISO
           OBJECTS=$(aws s3 ls "s3://${R2_BUCKET}/" \
             --endpoint-url "$R2_ENDPOINT" \
             | grep '\.iso$' | sort | awk '{print $NF}')
 
           COUNT=$(echo "$OBJECTS" | grep -c '\.iso' || true)
           if [ "$COUNT" -ge 1 ]; then
-            echo "$OBJECTS" | head -n "$COUNT" | while read -r OBJ; do
+            echo "$OBJECTS" | while read -r OBJ; do
               echo "Deleting old ISO: $OBJ"
               aws s3 rm "s3://${R2_BUCKET}/${OBJ}" \
                 --endpoint-url "$R2_ENDPOINT"
@@ -74,23 +77,26 @@ jobs:
           aws s3 cp "$ISO_FILE" "s3://${R2_BUCKET}/${ISO_NAME}" \
             --endpoint-url "$R2_ENDPOINT"
 
-      - name: Parse publish_info.md
+      - name: Build release body
         id: info
         run: |
           VERSION=$(head -1 publish_info.md | sed 's/^# //')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-          # 在 publish_info.md 末尾追加下载链接
-          echo "" >> publish_info.md
-          echo "---" >> publish_info.md
-          echo "**下载：** ${{ steps.r2.outputs.iso_url }}" >> publish_info.md
+          # 追加下载链接和 SHA256 到正文
+          cp publish_info.md release_body.md
+          echo "" >> release_body.md
+          echo "---" >> release_body.md
+          echo "**下载：** ${{ steps.r2.outputs.iso_url }}" >> release_body.md
+          echo "" >> release_body.md
+          echo "**SHA256：** \`${{ steps.r2.outputs.iso_sha256 }}\`" >> release_body.md
 
-      - name: Create Draft Release
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.info.outputs.version }}
           name: ${{ steps.info.outputs.version }}
-          body_path: publish_info.md
-          draft: true
+          body_path: release_body.md
+          draft: false
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
