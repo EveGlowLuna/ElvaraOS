@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=安装 ElvaraOS
+Name[en_US]=Install ElvaraOS
+Comment=将 ElvaraOS 安装到您的计算机
+Exec=/usr/local/bin/ElvaraInstaller
+Icon=/usr/bin/share/pixmaps/elvara.png
+Terminal=false
+Categories=System

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ElvaraOS Installer
+Exec=/usr/local/bin/ElvaraInstaller
+Icon=/usr/share/pixmaps/elvara.png
+Terminal=false
+X-GNOME-Autostart-enabled=true

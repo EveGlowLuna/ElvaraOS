@@ -1,0 +1,10 @@
+[Unit]
+Description=Trust ElvaraOS Installer desktop file
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/gio set %h/Desktop/elvara-installer.desktop metadata::trusted true
+
+[Install]
+WantedBy=graphical-session.target

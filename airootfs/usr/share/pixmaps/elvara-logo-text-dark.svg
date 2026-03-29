@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#1E2A5E"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 左侧图标 -->
+  <g transform="translate(10, 10) scale(0.195)">
+    <circle cx="256" cy="256" r="250" stroke="#2D3B6E" stroke-width="4" fill="none" opacity="0.6"/>
+    <circle cx="256" cy="256" r="248" fill="url(#bgGradient)"/>
+    <path d="M256 80 L 396 380 L 116 380 Z" fill="none" stroke="#5D9BFF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="186" y1="230" x2="396" y2="380" stroke="#5D9BFF" stroke-width="24" stroke-linecap="round"/>
+    <g transform="translate(180, 180) rotate(-15)">
+      <polygon points="0,0 45,15 15,55" fill="#2DD4BF" opacity="0.95"/>
+    </g>
+    <g transform="translate(320, 290) rotate(25)">
+      <polygon points="0,0 50,0 25,45" fill="#06B6D4" opacity="0.9"/>
+    </g>
+    <g transform="translate(180, 320) rotate(55)">
+      <polygon points="0,0 35,20 10,55" fill="#0EA5E9" opacity="0.9"/>
+    </g>
+    <g transform="translate(360, 210) rotate(-8)">
+      <polygon points="0,0 28,12 12,38" fill="#7DD3FC" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- 右侧文字，深色背景用白色 -->
+  <text x="125" y="75" font-family="sans-serif" font-size="52" font-weight="bold"
+        fill="#ffffff">ElvaraOS</text>
+</svg>
