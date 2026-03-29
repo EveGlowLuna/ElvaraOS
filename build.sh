@@ -1,13 +1,13 @@
 #!/bin/bash
 # build.sh - 在当前目录构建 Arch Linux ISO
 
-# 定义工作目录和输出目录（相对路径）
-WORK_DIR="./work"
+# 定义工作目录和输出目录
+WORK_DIR="/tmp/work"
 OUT_DIR="./out"
 
 # 清理旧目录（避免冲突）
 echo "清理旧的工作目录和输出目录..."
-rm -rf "$WORK_DIR" "$OUT_DIR"
+sudo rm -rf "$WORK_DIR" "$OUT_DIR"
 
 # 运行 mkarchiso（需要 root 权限）
 echo "开始构建 ISO，需要 root 权限..."
