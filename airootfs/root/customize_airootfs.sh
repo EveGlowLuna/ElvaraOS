@@ -174,6 +174,7 @@ cp /usr/share/pixmaps/elvara-logo-text-dark.svg /usr/share/pixmaps/archlinux-log
 # 加载 dconf 设置，直接编译进用户数据库
 # 将 keyfile 格式转换为 dconf 二进制数据库
 mkdir -p /tmp/dconf-profile
+mkdir -p /home/liveuser/.config/dconf
 cp /root/dconf-settings.txt /tmp/dconf-profile/user.ini
 dconf compile /home/liveuser/.config/dconf/user /tmp/dconf-profile
 
