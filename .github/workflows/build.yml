@@ -1,10 +1,6 @@
 name: Build ISO
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -27,3 +23,34 @@ jobs:
         with:
           name: iso
           path: output/*.iso
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download ISO artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: iso
+          path: output/
+
+      - name: Parse publish_info.md
+        id: info
+        run: |
+          VERSION=$(head -1 publish_info.md | sed 's/^# //')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.info.outputs.version }}
+          name: ${{ steps.info.outputs.version }}
+          body_path: publish_info.md
+          draft: true
+          files: output/*.iso
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
