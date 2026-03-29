@@ -39,11 +39,51 @@ jobs:
           name: iso
           path: output/
 
+      - name: Upload to R2 and manage retention
+        id: r2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+          R2_BUCKET: ${{ secrets.R2_BUCKET_NAME }}
+          CUSTOM_DOMAIN: https://elvarar2.eveglowsite.top
+        run: |
+          pip install awscli --quiet
+
+          ISO_FILE=$(ls output/*.iso | head -1)
+          ISO_NAME=$(basename "$ISO_FILE")
+          echo "iso_name=$ISO_NAME" >> $GITHUB_OUTPUT
+          echo "iso_url=${CUSTOM_DOMAIN}/${ISO_NAME}" >> $GITHUB_OUTPUT
+
+          # 上传前清理：超过 1 个就删最旧的
+          OBJECTS=$(aws s3 ls "s3://${R2_BUCKET}/" \
+            --endpoint-url "$R2_ENDPOINT" \
+            | grep '\.iso$' | sort | awk '{print $NF}')
+
+          COUNT=$(echo "$OBJECTS" | grep -c '\.iso' || true)
+          if [ "$COUNT" -ge 1 ]; then
+            echo "$OBJECTS" | head -n "$COUNT" | while read -r OBJ; do
+              echo "Deleting old ISO: $OBJ"
+              aws s3 rm "s3://${R2_BUCKET}/${OBJ}" \
+                --endpoint-url "$R2_ENDPOINT"
+            done
+          fi
+
+          # 上传新 ISO
+          aws s3 cp "$ISO_FILE" "s3://${R2_BUCKET}/${ISO_NAME}" \
+            --endpoint-url "$R2_ENDPOINT"
+
       - name: Parse publish_info.md
         id: info
         run: |
           VERSION=$(head -1 publish_info.md | sed 's/^# //')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          # 在 publish_info.md 末尾追加下载链接
+          echo "" >> publish_info.md
+          echo "---" >> publish_info.md
+          echo "**下载：** ${{ steps.r2.outputs.iso_url }}" >> publish_info.md
 
       - name: Create Draft Release
         uses: softprops/action-gh-release@v2
@@ -52,6 +92,5 @@ jobs:
           name: ${{ steps.info.outputs.version }}
           body_path: publish_info.md
           draft: true
-          files: output/*.iso
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
