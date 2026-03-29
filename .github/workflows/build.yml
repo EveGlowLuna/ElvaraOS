@@ -6,17 +6,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run build script
+      - name: Build ISO in privileged Arch container
         run: |
-          chmod +x ./build-workflow.sh
-          ./build-workflow.sh
+          docker run --rm --privileged \
+            -v ${{ github.workspace }}:/build \
+            -w /build \
+            archlinux:latest \
+            bash ./build-workflow.sh
 
       - name: Upload ISO
         uses: actions/upload-artifact@v4
