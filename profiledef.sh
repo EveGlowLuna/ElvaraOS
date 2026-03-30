@@ -24,4 +24,5 @@ file_permissions=(
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/etc/skel/.local/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js"]="0:0:755"
   ["/usr/local/bin/ElvaraInstaller"]="0:0:755"
+  ["/usr/local/bin/ElvaraOSTools"]="0:0:755"
 )

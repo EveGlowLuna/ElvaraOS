@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=ElvaraOS Tools
+Comment=帮助用户更好的使用系统
+Exec=/usr/local/bin/ElvaraOSTools
+Icon=/usr/share/pixmaps/elvara.png
+Terminal=false
+Categories=Utility;
