@@ -98,5 +98,4 @@ jobs:
           name: ${{ steps.info.outputs.version }}
           body_path: release_body.md
           draft: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          token: ${{ secrets.PUBLISH_TOKEN }}
