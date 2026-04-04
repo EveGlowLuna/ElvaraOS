@@ -1,11 +1,5 @@
-# v1.0
+# v1.1
 
-这是 ElvaraOS 的第一个版本！
-
-版本日志：
-- 提供 GNOME 桌面，自带插件
-- 默认 fcitx5 输入法支持
-- 使用 VLC 替代默认播放器
-- 基于ArchInstall的PyQt6安装器，提供更现代化的安装
-- 提供环境、开箱即用优化
-- bugs修复
+## 主要更新内容
+- 同步仓库更新 ElvaraInstaller。虽然他没有 ArchInstall 强大，也不支持BIOS，但可能比 ArchInstall 更稳定（万一呢？），尤其是对 NVMe 硬盘用户。
+- 修复livecd中**图标不显示**的问题
