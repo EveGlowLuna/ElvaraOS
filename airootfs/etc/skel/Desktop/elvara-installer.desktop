@@ -1,20 +1,10 @@
 [Desktop Entry]
-Categories=System
-Comment[zh_CN]=将 ElvaraOS 安装到您的计算机
-Comment=将 ElvaraOS 安装到您的计算机
-Exec=/usr/local/bin/ElvaraInstaller
-GenericName[zh_CN]=
-GenericName=
-Icon=/usr/share/pixmaps/elvara.png
-MimeType=
-Name[zh_CN]=安装 ElvaraOS
+Version=1.0
+Type=Application
 Name=安装 ElvaraOS
 Name[en_US]=Install ElvaraOS
-Path=
-StartupNotify=true
+Comment=将 ElvaraOS 安装到您的计算机
+Exec=/usr/local/share/ElvaraInstaller/ElvaraInstaller
+Icon=/usr/bin/share/pixmaps/elvara.png
 Terminal=false
-TerminalOptions=
-Type=Application
-Version=1.0
-X-KDE-SubstituteUID=false
-X-KDE-Username=
+Categories=System
