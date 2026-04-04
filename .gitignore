@@ -3,3 +3,4 @@ packages.x86_64.b
 res.txt
 out/
 .vscode/
+build/
