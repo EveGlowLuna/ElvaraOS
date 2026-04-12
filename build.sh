@@ -1,9 +1,46 @@
 #!/bin/bash
 # build.sh - 在当前目录构建 Arch Linux ISO
 
-# 定义工作目录和输出目录
+set -e
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORK_DIR="/tmp/work"
 OUT_DIR="./out"
+TEMP_DIR="/tmp/elvaraos_build"
+INSTALLER_DEST="$ROOT_DIR/airootfs/usr/local/share/ElvaraInstaller"
+TOOLS_DEST="$ROOT_DIR/airootfs/usr/local/bin"
+
+# 构建 ElvaraInstaller
+rm -rf "$TEMP_DIR"
+mkdir -p "$TEMP_DIR"
+cd "$TEMP_DIR"
+git clone --depth 1 https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
+cd ElvaraInstaller
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt
+chmod +x ./package.sh
+./package.sh
+deactivate
+mkdir -p "$INSTALLER_DEST"
+cp -a dist/ElvaraInstaller "$INSTALLER_DEST/"
+cp -a custom "$INSTALLER_DEST/"
+chmod +x "$INSTALLER_DEST/ElvaraInstaller"
+
+# 构建 ElvaraOSTools
+cd "$TEMP_DIR"
+rm -rf ElvaraInstaller
+
+git clone --depth 1 https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
+cd ElvaraOS-Toolbox
+dotnet publish ElvaraOSTools.sln -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -o publish || { echo "dotnet publish 失败"; exit 1; }
+mkdir -p "$TOOLS_DEST"
+cp -a publish/ElvaraOSTools "$TOOLS_DEST/ElvaraOSTools"
+chmod +x "$TOOLS_DEST/ElvaraOSTools"
+
+# 清理临时目录
+cd "$ROOT_DIR"
+rm -rf "$TEMP_DIR"
 
 # 清理旧目录（避免冲突）
 echo "清理旧的工作目录和输出目录..."

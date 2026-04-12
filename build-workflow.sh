@@ -2,17 +2,62 @@
 
 set -e
 
-# 安装 archiso 及依赖
-pacman -Sy --needed --noconfirm archiso || { echo "安装 archiso 失败"; exit 1; }
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+WORK_DIR="/tmp/work"
+OUTPUT_DIR="./output"
+TEMP_DIR="/tmp/elvaraos_build"
+INSTALLER_DEST="$ROOT_DIR/airootfs/usr/local/share/ElvaraInstaller"
+TOOLS_DEST="$ROOT_DIR/airootfs/usr/local/bin"
 
-# 创建工作目录
-mkdir -p /tmp/work
+# 检查并安装必要的依赖
+for cmd in dotnet python3; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "$cmd 未找到，正在安装..."
+    case "$cmd" in
+      dotnet) pkg="dotnet-sdk" ;;
+      python3) pkg="python" ;;
+    esac
+    pacman -Sy --needed --noconfirm "$pkg" || { echo "安装 $pkg 失败"; exit 1; }
+  fi
+ done
 
-# 构建 ISO
-mkarchiso -v -w /tmp/work -o "./output" . || { echo "mkarchiso 构建失败"; exit 1; }
+# 构建 ElvaraInstaller
+rm -rf "$TEMP_DIR"
+mkdir -p "$TEMP_DIR"
+cd "$TEMP_DIR"
+git clone --depth 1 https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
+cd ElvaraInstaller
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt
+chmod +x ./package.sh
+./package.sh
+deactivate
+mkdir -p "$INSTALLER_DEST"
+cp -a dist/ElvaraInstaller "$INSTALLER_DEST/"
+cp -a custom "$INSTALLER_DEST/"
+chmod +x "$INSTALLER_DEST/ElvaraInstaller"
 
-# 赋予 ISO 可执行权限
-chmod +x ./output/*.iso || { echo "chmod 失败"; exit 1; }
+# 构建 ElvaraOSTools
+cd "$TEMP_DIR"
+rm -rf ElvaraInstaller
+
+git clone --depth 1 https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
+cd ElvaraOS-Toolbox
+dotnet publish ElvaraOSTools.sln -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -o publish || { echo "dotnet publish 失败"; exit 1; }
+mkdir -p "$TOOLS_DEST"
+cp -a publish/ElvaraOSTools "$TOOLS_DEST/ElvaraOSTools"
+chmod +x "$TOOLS_DEST/ElvaraOSTools"
+
+# 清理临时目录
+cd "$ROOT_DIR"
+rm -rf "$TEMP_DIR"
+
+# 创建工作目录并构建 ISO
+mkdir -p "$WORK_DIR"
+mkarchiso -v -w "$WORK_DIR" -o "$OUTPUT_DIR" . || { echo "mkarchiso 构建失败"; exit 1; }
+chmod +x "$OUTPUT_DIR"/*.iso || { echo "chmod 失败"; exit 1; }
 
 echo "构建成功"
 exit 0
