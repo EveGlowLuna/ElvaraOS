@@ -10,13 +10,14 @@ INSTALLER_DEST="$ROOT_DIR/airootfs/usr/local/share/ElvaraInstaller"
 TOOLS_DEST="$ROOT_DIR/airootfs/usr/local/bin"
 
 # 检查并安装必要的依赖
-for cmd in dotnet python3 git; do
+for cmd in dotnet python3 git mkarchiso; do
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "$cmd 未找到，正在安装..."
     case "$cmd" in
       dotnet) pkg="dotnet-sdk" ;;
       python3) pkg="python" ;;
       git) pkg="git" ;;
+      mkarchiso) pkg="archiso"
     esac
     pacman -Sy --needed --noconfirm "$pkg" || { echo "安装 $pkg 失败"; exit 1; }
   fi
