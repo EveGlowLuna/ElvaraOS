@@ -16,6 +16,7 @@ for cmd in dotnet python3; do
     case "$cmd" in
       dotnet) pkg="dotnet-sdk" ;;
       python3) pkg="python" ;;
+      git) pkg="git" ;;
     esac
     pacman -Sy --needed --noconfirm "$pkg" || { echo "安装 $pkg 失败"; exit 1; }
   fi
