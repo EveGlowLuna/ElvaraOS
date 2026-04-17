@@ -1,6 +1,8 @@
-# v1.2
+# v1.3
 
 ## 主要更新内容
-- 同步仓库更新 ElvaraInstaller。虽然他没有 ArchInstall 强大，也不支持BIOS，但可能比 ArchInstall 更稳定（万一呢？），尤其是对 NVMe 硬盘用户。
-- 添加插件
-- 实时跟进ElvaraOSTools和ElvaraInstaller，确保每次打包都是最新版本
+- 修复ElvaraInstaller不能用的问题。
+- (实验性)修复ElvaraInstaller支持BIOS安装。
+- 修复终端的ElvaraInstaller可用并提供TTY支持。
+- 修复插件可用性，将所有插件改为系统插件。
+- 修复ElvaraOSTools打包，确保其生成单文件。
