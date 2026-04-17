@@ -1,11 +1,11 @@
 [Unit]
 Description=Fix DING ding.js execute permission
-ConditionFileIsExecutable=!%h/.local/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js
+ConditionFileIsExecutable=/usr/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js
 After=graphical-session.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/chmod +x %h/.local/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js
+ExecStart=/bin/chmod +x /usr/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js
 ExecStartPost=/bin/bash -c 'sleep 2 && gnome-extensions disable ding@rastersoft.com && sleep 1 && gnome-extensions enable ding@rastersoft.com'
 
 [Install]
