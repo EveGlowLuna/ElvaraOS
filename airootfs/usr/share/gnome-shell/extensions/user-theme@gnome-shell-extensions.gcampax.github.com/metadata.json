@@ -9,7 +9,7 @@
   ],
   "settings-schema": "org.gnome.shell.extensions.user-theme",
   "shell-version": [
-    "49"
+    "50"
   ],
   "url": "https://gitlab.gnome.org/GNOME/gnome-shell-extensions",
   "uuid": "user-theme@gnome-shell-extensions.gcampax.github.com",

@@ -1,8 +1,9 @@
-# v1.3
+# v1.4
 
 ## 主要更新内容
-- 修复ElvaraInstaller不能用的问题。
 - (实验性)修复ElvaraInstaller支持BIOS安装。
-- 修复终端的ElvaraInstaller可用并提供TTY支持。
-- 修复插件可用性，将所有插件改为系统插件。
-- 修复ElvaraOSTools打包，确保其生成单文件。
+- 修复GNOME插件适配新版本。
+
+## 前瞻性通知
+- 计划在后续几个版本中切换桌面环境，不再使用GNOME
+- 将基于 https://github.com/SHORiN-KiWATA/shorin-arch-setup 定制新的自选择桌面环境。

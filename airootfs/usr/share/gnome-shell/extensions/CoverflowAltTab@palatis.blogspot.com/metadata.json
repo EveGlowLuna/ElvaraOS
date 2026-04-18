@@ -10,7 +10,7 @@
   "name": "Coverflow Alt-Tab",
   "settings-schema": "org.gnome.shell.extensions.coverflowalttab",
   "shell-version": [
-    "49"
+    "50"
   ],
   "url": "https://github.com/dsheeler/CoverflowAltTab",
   "uuid": "CoverflowAltTab@palatis.blogspot.com",
