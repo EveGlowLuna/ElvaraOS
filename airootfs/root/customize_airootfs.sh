@@ -83,7 +83,6 @@ mkdir -p /home/liveuser/.config/dconf
 cp /root/dconf-settings.txt /tmp/dconf-profile/user.ini
 dconf compile /home/liveuser/.config/dconf/user /tmp/dconf-profile
 
-# 由于不知道是英文桌面还是中文，所以两个都要。（但livecd我之前每次都是中文）
 chmod +x /home/liveuser/桌面/elvara-installer.desktop
 chmod +x /home/liveuser/Desktop/elvara-installer.desktop
 
