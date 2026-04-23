@@ -22,7 +22,6 @@ file_permissions=(
   ["/usr/local/bin/choose-mirror"]="0:0:755"
   ["/usr/local/bin/Installation_guide"]="0:0:755"
   ["/usr/local/bin/livecd-sound"]="0:0:755"
-  ["/usr/share/gnome-shell/extensions/ding@rastersoft.com/app/ding.js"]="0:0:755"
   ["/usr/local/share/ElvaraInstaller/ElvaraInstaller"]="0:0:755"
   ["/usr/local/bin/ElvaraOSTools"]="0:0:755"
 )
