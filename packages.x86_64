@@ -61,14 +61,13 @@ gnome-keyring
 metacity
 cjs
 
-cinnamon-calculator
-cinnamon-backgrounds
+gnome-calculator
 gnome-themes-extra
 adwaita-icon-theme
-cinnamon-logs
+gnome-logs
 gnome-font-viewer
 xfce4-terminal
-cinnamon-tweaks
+dconf-editor
 gnome-disk-utility
 gnome-system-monitor
 gedit
