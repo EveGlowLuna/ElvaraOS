@@ -56,6 +56,11 @@ if [ $? -eq 0 ]; then
     echo "构建成功！ISO 文件位于 $OUT_DIR 目录下。"
     echo "正在将输出文件权限改为当前用户..."
     sudo chown -R "$USER":"$USER" "$OUT_DIR"
+    
+    echo "清理构建的 ElvaraInstaller 和 ElvaraOSTools..."
+    rm -rf "$INSTALLER_DEST"
+    rm -f "$TOOLS_DEST/ElvaraOSTools"
+    
     echo "完成。"
 else
     echo "构建失败，请检查错误信息。"
