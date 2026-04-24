@@ -46,6 +46,9 @@ cinnamon
 cinnamon-session
 cinnamon-settings-daemon
 cinnamon-control-center
+cinnamon-panel
+cinnamon-applets
+cinnamon-menus
 muffin
 nemo
 nemo-fileroller

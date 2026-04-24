@@ -55,6 +55,7 @@ cat > /etc/lightdm/lightdm.conf << 'EOF'
 [Seat:*]
 autologin-user=liveuser
 autologin-user-timeout=0
+user-session=cinnamon
 EOF
 
 sed -i 's/#zh_CN.UTF-8/zh_CN.UTF-8/' /etc/locale.gen
