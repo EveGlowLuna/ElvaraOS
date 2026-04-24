@@ -31,6 +31,14 @@ ln -sf /home/liveuser/.config/systemd/user/trust-installer-desktop.service \
 chown -R liveuser:liveuser /home/liveuser
 echo "liveuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/liveuser
 
+groupadd -r autologin
+gpasswd -a liveuser autologin
+
+gpasswd -a liveuser video
+gpasswd -a liveuser audio
+gpasswd -a liveuser input
+gpasswd -a liveuser storage
+
 # 安装 yay
 cd /tmp
 git clone https://aur.archlinux.org/yay.git
