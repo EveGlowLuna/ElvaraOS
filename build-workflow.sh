@@ -46,7 +46,7 @@ chmod +x "$INSTALLER_DEST/ElvaraInstaller"
 cd "$TEMP_DIR"
 rm -rf ElvaraInstaller
 
-git clone --depth 1 https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
+git clone https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
 cd ElvaraOS-Toolbox
 dotnet publish ElvaraOSTools.sln -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o publish || { echo "dotnet publish 失败"; exit 1; }
 mkdir -p "$TOOLS_DEST"

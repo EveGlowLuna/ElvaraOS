@@ -12,7 +12,7 @@ TOOLS_DEST="$ROOT_DIR/airootfs/usr/local/bin"
 rm -rf "$TEMP_DIR"
 mkdir -p "$TEMP_DIR"
 cd "$TEMP_DIR"
-git clone --depth 1 https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
+git clone https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
 cd ElvaraInstaller
 git checkout dev_custom
 mkdir -p custom
