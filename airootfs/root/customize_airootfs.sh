@@ -58,18 +58,22 @@ autologin-user-timeout=0
 user-session=cinnamon
 EOF
 
-# 确保 LightDM autologin PAM 配置存在
-if [ ! -f /etc/pam.d/lightdm-autologin ]; then
-cat > /etc/pam.d/lightdm-autologin << 'EOF'
-#%PAM-1.0
-auth        required    pam_env.so
-auth        required    pam_permit.so
-auth        optional    pam_gnome_keyring.so
-account     include     system-local-login
-session     include     system-local-login
-session     optional    pam_gnome_keyring.so auto_start
+# 移除 PAM 中的 gnome-keyring，避免无密码用户 session 被 keyring 锁死
+sed -i '/pam_gnome_keyring/d' /etc/pam.d/lightdm 2>/dev/null || true
+sed -i '/pam_gnome_keyring/d' /etc/pam.d/lightdm-autologin 2>/dev/null || true
+
+# 强制 LightDM 通过 dbus-launch 启动 session，修复 archiso 环境下 dbus session bus 未初始化导致 session 立即退出的问题
+cat > /etc/lightdm/Xsession << 'XEOF'
+#!/bin/sh
+exec dbus-launch --exit-with-session "$@"
+XEOF
+chmod +x /etc/lightdm/Xsession
+
+mkdir -p /etc/lightdm/lightdm.conf.d
+cat > /etc/lightdm/lightdm.conf.d/20-session.conf << 'EOF'
+[Seat:*]
+session-wrapper=/etc/lightdm/Xsession
 EOF
-fi
 
 sed -i 's/#zh_CN.UTF-8/zh_CN.UTF-8/' /etc/locale.gen
 locale-gen
