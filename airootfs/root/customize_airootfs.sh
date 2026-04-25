@@ -31,7 +31,7 @@ ln -sf /home/liveuser/.config/systemd/user/trust-installer-desktop.service \
 chown -R liveuser:liveuser /home/liveuser
 echo "liveuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/liveuser
 
-groupadd -r autologin
+groupadd -r autologin 2>/dev/null || true
 gpasswd -a liveuser autologin
 
 gpasswd -a liveuser video
@@ -57,6 +57,19 @@ autologin-user=liveuser
 autologin-user-timeout=0
 user-session=cinnamon
 EOF
+
+# 确保 LightDM autologin PAM 配置存在
+if [ ! -f /etc/pam.d/lightdm-autologin ]; then
+cat > /etc/pam.d/lightdm-autologin << 'EOF'
+#%PAM-1.0
+auth        required    pam_env.so
+auth        required    pam_permit.so
+auth        optional    pam_gnome_keyring.so
+account     include     system-local-login
+session     include     system-local-login
+session     optional    pam_gnome_keyring.so auto_start
+EOF
+fi
 
 sed -i 's/#zh_CN.UTF-8/zh_CN.UTF-8/' /etc/locale.gen
 locale-gen
