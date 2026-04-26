@@ -14,7 +14,7 @@ pacman-key --populate archlinux
 
 # 启用服务
 systemctl enable earlyoom
-systemctl enable lightdm
+systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable bluetooth
 
@@ -22,22 +22,22 @@ systemctl enable bluetooth
 mkdir -p /build/go-cache
 chmod 777 /build/go-cache
 
+
+groupadd -r autologin 2>/dev/null || true
+if ! id "liveuser" >/dev/null 2>&1;
+then
+    useradd -m -p "" -g users -G wheel,video,audio,input,storage,autologin -s /usr/bin/zsh liveuser
+fi
 mkdir -p /home/liveuser
 cp -rT /etc/skel /home/liveuser
 mkdir -p /home/liveuser/Desktop
 mkdir -p /home/liveuser/.config/systemd/user/graphical-session.target.wants
 ln -sf /home/liveuser/.config/systemd/user/trust-installer-desktop.service \
     /home/liveuser/.config/systemd/user/graphical-session.target.wants/trust-installer-desktop.service
-chown -R liveuser:liveuser /home/liveuser
+# chown -R liveuser:users /home/liveuser
 echo "liveuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/liveuser
 
-groupadd -r autologin 2>/dev/null || true
-gpasswd -a liveuser autologin
 
-gpasswd -a liveuser video
-gpasswd -a liveuser audio
-gpasswd -a liveuser input
-gpasswd -a liveuser storage
 
 # 安装 yay
 cd /tmp
@@ -51,28 +51,11 @@ pacman -U --noconfirm yay-*.pkg.tar.zst
 cd ..
 rm -rf yay
 
-cat > /etc/lightdm/lightdm.conf << 'EOF'
-[Seat:*]
-autologin-user=liveuser
-autologin-user-timeout=0
-user-session=cinnamon
-EOF
-
-# 移除 PAM 中的 gnome-keyring，避免无密码用户 session 被 keyring 锁死
-sed -i '/pam_gnome_keyring/d' /etc/pam.d/lightdm 2>/dev/null || true
-sed -i '/pam_gnome_keyring/d' /etc/pam.d/lightdm-autologin 2>/dev/null || true
-
-# 强制 LightDM 通过 dbus-launch 启动 session，修复 archiso 环境下 dbus session bus 未初始化导致 session 立即退出的问题
-cat > /etc/lightdm/Xsession << 'XEOF'
-#!/bin/sh
-exec dbus-launch --exit-with-session "$@"
-XEOF
-chmod +x /etc/lightdm/Xsession
-
-mkdir -p /etc/lightdm/lightdm.conf.d
-cat > /etc/lightdm/lightdm.conf.d/20-session.conf << 'EOF'
-[Seat:*]
-session-wrapper=/etc/lightdm/Xsession
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/autologin.conf <<'EOF'
+[Autologin]
+User=liveuser
+Session=cinnamon
 EOF
 
 sed -i 's/#zh_CN.UTF-8/zh_CN.UTF-8/' /etc/locale.gen
@@ -102,6 +85,7 @@ cp /usr/share/pixmaps/elvara-logo-text-dark.svg /usr/share/pixmaps/archlinux-log
 chmod +x /home/liveuser/桌面/elvara-installer.desktop
 chmod +x /home/liveuser/Desktop/elvara-installer.desktop
 
-chown -R liveuser:liveuser /home/liveuser
+chmod 755 /home/liveuser
 
+chown -R liveuser:users /home/liveuser
 exit 0

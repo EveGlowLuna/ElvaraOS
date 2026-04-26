@@ -56,8 +56,6 @@ cinnamon-translations
 network-manager-applet
 xapp
 xdg-desktop-portal-xapp
-lightdm
-lightdm-gtk-greeter
 xdg-desktop-portal-gtk
 xdg-user-dirs-gtk
 gvfs
@@ -67,12 +65,13 @@ gnome-keyring
 metacity
 cjs
 
+sddm
 gnome-calculator
 gnome-themes-extra
 adwaita-icon-theme
 gnome-logs
 gnome-font-viewer
-xfce4-terminal
+gnome-terminal
 dconf-editor
 gnome-disk-utility
 gnome-system-monitor
