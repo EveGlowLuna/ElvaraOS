@@ -42,7 +42,7 @@ else
 
     git clone --depth 1 https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
     cd ElvaraOS-Toolbox
-    dotnet publish ElvaraOSTools.sln -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o publish || { echo "dotnet publish 失败"; exit 1; }
+    dotnet publish ElvaraOSTools/ElvaraOSTools.csproj -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o publish || { echo "dotnet publish 失败"; exit 1; }
     mkdir -p "$TOOLS_DEST"
     cp -a publish/ElvaraOSTools "$TOOLS_DEST/ElvaraOSTools"
     chmod +x "$TOOLS_DEST/ElvaraOSTools"
@@ -50,16 +50,20 @@ fi
 
 # 清理临时目录
 cd "$ROOT_DIR"
-rm -rf "$TEMP_DIR"
+sudo rm -rf "$TEMP_DIR"
 
 # 清理旧目录并构建 ISO
 echo "清理旧的工作目录和输出目录..."
 sudo rm -rf "$WORK_DIR" "$OUTPUT_DIR"
 
 echo "开始构建 ISO，需要 root 权限..."
+# 关闭 set -e 以正确捕获 mkarchiso 的退出码
+set +e
 sudo mkarchiso -v -w "$WORK_DIR" -o "$OUTPUT_DIR" .
+BUILD_EXIT_CODE=$?
+set -e
 
-if [ $? -eq 0 ]; then
+if [ $BUILD_EXIT_CODE -eq 0 ]; then
     echo "构建成功！ISO 文件位于 $OUTPUT_DIR 目录下。"
     echo "正在将输出文件权限改为当前用户..."
     sudo chown -R "$USER":"$USER" "$OUTPUT_DIR"
