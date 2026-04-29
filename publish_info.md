@@ -1,9 +1,9 @@
-# v1.4
+# v2.0
 
 ## 主要更新内容
-- (实验性)修复ElvaraInstaller支持BIOS安装。
-- 修复GNOME插件适配新版本。
+- 切换桌面环境为Cinnamon。
+- 可在安装器自行选择需要的桌面环境。感谢 [SHORiN-KiWATA/shorin-arch-setup](https://github.com/SHORiN-KiWATA/shorin-arch-setup) 仓库。
 
-## 前瞻性通知
-- 计划在后续几个版本中切换桌面环境，不再使用GNOME
-- 将基于 https://github.com/SHORiN-KiWATA/shorin-arch-setup 定制新的自选择桌面环境。
+> [!WARNING]
+> 最新版与旧版安装器均会安装最新版本的软件。现有镜像仓库只维护最新的两个版本。
+

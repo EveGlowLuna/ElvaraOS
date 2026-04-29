@@ -15,7 +15,7 @@ mkdir -p "$TEMP_DIR"
 cd "$TEMP_DIR"
 git clone https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
 cd ElvaraInstaller
-git checkout elvara_custom
+git checkout dev_custom
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install --upgrade pip
