@@ -4,3 +4,6 @@ res.txt
 out/
 .vscode/
 build/
+**/ElvaraInstaller/
+**/ElvaraOSTools
+log.txt

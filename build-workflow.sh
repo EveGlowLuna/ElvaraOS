@@ -27,9 +27,10 @@ for cmd in dotnet python3 git mkarchiso; do
 rm -rf "$TEMP_DIR"
 mkdir -p "$TEMP_DIR"
 cd "$TEMP_DIR"
-git clone --depth 1 https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
+git clone https://github.com/EveGlowLuna/ElvaraInstaller.git || { echo "clone ElvaraInstaller 失败"; exit 1; }
 cd ElvaraInstaller
-git checkout elvara_custom
+git checkout dev_custom
+git clone https://github.com/EveGlowLuna/shorin-arch-setup-elvarainstaller custom/shorin-arch-setup
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install --upgrade pip
@@ -48,7 +49,7 @@ rm -rf ElvaraInstaller
 
 git clone https://github.com/EveGlowLuna/ElvaraOS-Toolbox.git || { echo "clone ElvaraOS-Toolbox 失败"; exit 1; }
 cd ElvaraOS-Toolbox
-dotnet publish ElvaraOSTools.sln -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o publish || { echo "dotnet publish 失败"; exit 1; }
+dotnet publish ElvaraOSTools/ElvaraOSTools.csproj -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o publish || { echo "dotnet publish 失败"; exit 1; }
 mkdir -p "$TOOLS_DEST"
 cp -a publish/ElvaraOSTools "$TOOLS_DEST/ElvaraOSTools"
 chmod +x "$TOOLS_DEST/ElvaraOSTools"
