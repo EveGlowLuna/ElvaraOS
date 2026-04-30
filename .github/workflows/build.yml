@@ -59,17 +59,19 @@ jobs:
           echo "iso_url=${CUSTOM_DOMAIN}/${ISO_NAME}" >> $GITHUB_OUTPUT
           echo "iso_sha256=$ISO_SHA256" >> $GITHUB_OUTPUT
 
-          # 上传前清理：删除所有旧文件
+          # 上传前清理：删除所有旧 ISO
           OBJECTS=$(aws s3 ls "s3://${R2_BUCKET}/" \
             --endpoint-url "$R2_ENDPOINT" \
-            | awk '{print $NF}')
+            | grep '\.iso$' | sort | awk '{print $NF}')
 
-          echo "$OBJECTS" | while read -r OBJ; do
-            [ -z "$OBJ" ] && continue
-            echo "Deleting old file: $OBJ"
-            aws s3 rm "s3://${R2_BUCKET}/${OBJ}" \
-              --endpoint-url "$R2_ENDPOINT"
-          done
+          COUNT=$(echo "$OBJECTS" | grep -c '\.iso' || true)
+          if [ "$COUNT" -ge 1 ]; then
+            echo "$OBJECTS" | while read -r OBJ; do
+              echo "Deleting old ISO: $OBJ"
+              aws s3 rm "s3://${R2_BUCKET}/${OBJ}" \
+                --endpoint-url "$R2_ENDPOINT"
+            done
+          fi
 
           # 上传新 ISO
           aws s3 cp "$ISO_FILE" "s3://${R2_BUCKET}/${ISO_NAME}" \
