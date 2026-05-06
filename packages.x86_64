@@ -110,7 +110,6 @@ linux-firmware
 linux-firmware-marvell
 livecd-sounds
 lsscsi
-lutris
 lvm2
 lynx
 man-db
@@ -178,7 +177,6 @@ vpnc
 wine
 wine-gecko
 wine-mono
-gamemode
 wireless-regdb
 wireless_tools
 wpa_supplicant
@@ -190,7 +188,6 @@ xl2tpd
 zsh
 zram-generator
 earlyoom
-mesa
 libglvnd
 xf86-video-vesa
 plymouth
@@ -202,3 +199,18 @@ bluez-utils
 librsvg
 firefox
 fastfetch
+aria2
+curl
+efitools
+hfsprogs
+inxi
+lshw
+lsof
+memtester
+mokutil
+os-prober
+pacman-contrib
+pacutils
+reiserfsprogs
+strace
+wget
