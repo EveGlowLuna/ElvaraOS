@@ -9,9 +9,6 @@ sed -i 's/^CheckSpace/#CheckSpace/' /etc/pacman.conf
 pacman-key --init
 pacman-key --populate archlinux
 
-# 不需要
-# pacman -Syu --noconfirm
-
 # 启用服务
 systemctl enable earlyoom
 systemctl enable sddm
@@ -34,7 +31,6 @@ mkdir -p /home/liveuser/Desktop
 mkdir -p /home/liveuser/.config/systemd/user/graphical-session.target.wants
 ln -sf /home/liveuser/.config/systemd/user/trust-installer-desktop.service \
     /home/liveuser/.config/systemd/user/graphical-session.target.wants/trust-installer-desktop.service
-# chown -R liveuser:users /home/liveuser
 echo "liveuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/liveuser
 
 
