@@ -79,3 +79,10 @@ bash build-personal.sh
 ## 许可证
 
 GNU General Public License v3.0
+
+
+## 彩蛋
+
+此项目的 Stone Badge：
+
+![Stone Badge](https://stone.professorlee.work/api/stone/EveGlowLuna/ElvaraOS)
