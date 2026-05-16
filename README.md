@@ -1,11 +1,10 @@
 # ElvaraOS
 
-<p>
-  <a href="https://github.com/EveGlowLuna/ElvaraOS/releases"><img src="https://img.shields.io/github/v/release/EveGlowLuna/ElvaraOS?style=flat-square&label=版本" alt="版本"></a>
-  <a href="https://github.com/EveGlowLuna/ElvaraOS/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/EveGlowLuna/ElvaraOS/build.yml?style=flat-square&label=构建" alt="构建状态"></a>
-  <a href="https://github.com/EveGlowLuna/ElvaraOS/blob/main/LICENSE"><img src="https://img.shields.io/badge/许可证-GPLv3-blue?style=flat-square" alt="许可证"></a>
-  <a href="https://elvaraos.eveglowsite.top"><img src="https://img.shields.io/badge/官网-elvaraos.eveglowsite.top-8B5CF6?style=flat-square&logo=safari" alt="官网"></a>
-</p>
+[![Release](https://img.shields.io/github/v/release/EveGlowLuna/ElvaraOS?style=flat-square)](https://github.com/EveGlowLuna/ElvaraOS/releases)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/EveGlowLuna/ElvaraOS/build.yml?style=flat-square)](https://github.com/EveGlowLuna/ElvaraOS/actions/workflows/build.yml)
+[![License](https://img.shields.io/badge/license-GPLv3-blue?style=flat-square)](https://github.com/EveGlowLuna/ElvaraOS/blob/main/LICENSE)
+
+官网：https://elvaraos.eveglowsite.top
 
 ElvaraOS 是一个基于 Arch Linux 的 LiveCD 发行版，提供图形化安装器和开箱即用的中文桌面体验。
 
