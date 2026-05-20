@@ -202,7 +202,6 @@ fastfetch
 aria2
 curl
 efitools
-hfsprogs
 inxi
 lshw
 lsof
@@ -211,6 +210,5 @@ mokutil
 os-prober
 pacman-contrib
 pacutils
-reiserfsprogs
 strace
 wget
